@@ -60,27 +60,90 @@ const datas = [
   }
 ];
 
-function CourseItem(props) {
-  let {id, title, description, image_url} = props.course;
+function Button({href, text, onClick, className}) {
+
+  let Component = 'button';
+  let props = {
+    className: `custom-button ${className}`
+  };
+
+  if (href) {
+    Component = 'a';
+    props.href = href;
+  }
+
+  if(onClick) {
+    props.onClick = onClick;
+  }
+
+
+  return (
+    <Component {...props}>{text}</Component>
+  );
+}
+
+function CourseItem({course, onClick = () => {}}) {
+
+  function handleClick() {
+    console.log("Register", course.title);
+  }
   return (
     <>
-      <h2>{id}-{title}</h2>
-      <img src={image_url} alt={title}></img>
-      <p>{description}</p>
+      <h2 onClick={() => onClick(course)}>
+        {course.id}-{course.title}
+      </h2>
+      <img src={course.image_url} alt={course.title}/>
+      <p>{course.description}</p>
+      <Button text="Register" onClick={handleClick} className="override-button"/>
+    </>
+  )
+}
+
+function Courses({courses}) {
+  return (
+    <>
+      {courses.map(course => <CourseItem key={course.id} course={course}/>)}
+    </>
+  )
+}
+
+function CourseList({courses, children}) {
+  return (
+    <>
+      {/* {courses.map((course, index) => children({course, index}))} */}
+      {courses.map((...props) => children(...props))}
     </>
   )
 }
 
 function App() {
-  const [count, setCount] = useState(0)
 
-  return (
-    <>
-      {
-        datas.map(course => <CourseItem key={course.id} course={course}></CourseItem>)
-      }
-    </>
-  )
+  function handleClick(course) {
+    console.log(course.title);
+  }
+
+  //Case1:
+  // return (
+  //   <>
+  //     {
+  //       datas.map(course => 
+  //         <CourseItem 
+  //           key={course.id} 
+  //           course={course}
+  //           onClick={handleClick}
+  //         />
+  //       )
+  //     }
+  //   </>
+  // )
+
+  //Case2:
+  //return (<Courses courses={datas}/>)
+
+  //Case3:
+  return (<CourseList courses={datas}>
+    {(course, index) => <CourseItem course={course} key={index}/>}
+  </CourseList>)
 }
 
 export default App

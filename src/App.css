@@ -1,0 +1,9 @@
+.custom-button {
+    text-decoration: none;
+    color: #ffffff;
+    font-weight: bold;
+    padding: 8px 10px;
+    border-radius: 4px;
+    background: #7c7cdf;
+    border: unset;
+}
