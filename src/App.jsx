@@ -2,19 +2,39 @@ import React, { useState } from 'react'
 import './App.css'
 
 function App() {
-  const [profile, setProfile] = useState({
-    name: 'John Doe',
-    age: 25,
+
+  const [job, setJob] = useState('');
+  const [jobs, setJobs] = useState(() => {
+    const savedJobs = localStorage.getItem('jobs');
+    if (savedJobs) 
+      return JSON.parse(savedJobs);
+    return [];
+    
   });
 
-  function updateName() {
-    setProfile(prevState => ({...prevState, name: 'Jane Doe Update', bio: "Love coding"}));
-  } 
+  const handleChangeJob = (e) => {
+    setJob(e.target.value);
+  }
+
+  const handleAddJob = () => { 
+    setJobs(prevState => {
+      const newJobs = [...prevState, job];
+      localStorage.setItem('jobs', JSON.stringify(newJobs));
+      return newJobs;
+    });
+    setJob(''); 
+  }
 
   return (
     <div className="App">
-      <h2>{JSON.stringify(profile)}</h2>
-      <button onClick={updateName}>Update Name</button>
+      <h2>TO DO LIST</h2>
+      <input value={job} onChange={handleChangeJob}></input>
+      <button onClick={handleAddJob}>Add Job</button>
+      <ul>
+        {jobs.map((job, index) => (
+          <li key={index}>{job}</li>
+        ))}
+      </ul>
     </div>
   )
 }
