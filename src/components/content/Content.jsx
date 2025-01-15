@@ -3,6 +3,8 @@ import Title from '../Title/Title';
 import Tab from '../tab/Tab';
 import ScrollButton from '../scrollButton/scrollButton';
 import ResizeScreen from '../resizeScreen/resizeScreen';
+import Avatar from '../avatar/avatar';
+import Chat from '../chat/chat';
 
 function Content() {
   return (
@@ -17,7 +19,13 @@ function Content() {
       <p>2. UseEffect with DOM events</p>
       <ResizeScreen/>
       <hr />
+      <p>3. The avatar preview</p>
+      <Avatar/>
+      <p>4. Fake Chat</p>
+      <Chat/>
+      
       <ScrollButton/>
+
     </div>
   );
 }   
